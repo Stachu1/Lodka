@@ -1,7 +1,7 @@
 #include <WiFi.h>
 
-const char* ssid = "BSR - Elektroniczna";
-const char* pswd = "realnywarsztat";
+const char* ssid = "BSR - Uczniowie";
+const char* pswd = "bednarsk@";
 
 WiFiServer server(80);
 
