@@ -7,7 +7,7 @@ left = 'a'
 right = 'd'
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("192.168.101.206", 80))
+s.connect(("192.168.4.1", 80))
 
 def sendMsg(msg):
     s.sendall(msg.encode("utf-8"))

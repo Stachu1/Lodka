@@ -1,7 +1,11 @@
+#include <Arduino.h>
 #include <WiFi.h>
 
-const char* ssid = "BSR - Uczniowie";
-const char* pswd = "bednarsk@";
+// const char* ssid = "BSR - Uczniowie";
+// const char* pswd = "bednarsk@";
+
+const char* ssid = "esp-wifi";
+const char* pswd = "esp-wifi";
 
 WiFiServer server(80);
 
@@ -73,4 +77,6 @@ void loop() {
         Serial.print("r");
       Serial.print("\n");
     }
-    clien
+    client.stop();
+  }
+}
