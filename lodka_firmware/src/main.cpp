@@ -5,6 +5,13 @@
 
 #define AP 1
 
+#define KEY "1111"
+
+#define MOTOR_L 12
+#define MOTOR_R 13
+
+#define MOTOR_L_CHANNEL 0
+#define MOTOR_R_CHANNEL 1
 
 const char* ssid = "BSR - Uczniowie";
 const char* pswd = "bednarsk@";
@@ -25,6 +32,12 @@ void server_loop(void * params);
 void setup() {
   Serial.begin(9600);
 
+  ledcSetup(MOTOR_L_CHANNEL, 400, 16);
+  ledcSetup(MOTOR_R_CHANNEL, 400, 16);
+
+  ledcAttachPin(MOTOR_L, MOTOR_L_CHANNEL);
+  ledcAttachPin(MOTOR_R, MOTOR_R_CHANNEL);
+
   wifi_init(AP);
 
   server.begin(); 
@@ -33,7 +46,9 @@ void setup() {
 }
 
 void loop() {
-  
+  if(json_document["key"] == KEY) {
+    
+  }
 }
 
 void server_loop(void * params) {
@@ -41,13 +56,15 @@ void server_loop(void * params) {
     WiFiClient client = server.available();
     if(client)
     {
-      client.println("1111");
+      client.println(KEY);
       while(client.connected())
       {
         while(client.available() > 0)
         {
-          String cmd = client.readString();
+          char cmd[1024];
+          client.read((uint8_t *)cmd, 1024);
           Serial.println(cmd);
+          deserializeJson(json_document, cmd);
         }
       }
       client.stop();
