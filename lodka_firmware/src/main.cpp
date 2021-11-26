@@ -7,11 +7,15 @@
 
 #define KEY "1111"
 
-#define MOTOR_L 12
-#define MOTOR_R 13
+#define MOTOR_L_F 5
+#define MOTOR_L_B 18
+#define MOTOR_R_F 19
+#define MOTOR_R_B 21
 
-#define MOTOR_L_CHANNEL 0
-#define MOTOR_R_CHANNEL 1
+#define MOTOR_L_CHANNEL_F 0
+#define MOTOR_L_CHANNEL_B 1
+#define MOTOR_R_CHANNEL_F 2 
+#define MOTOR_R_CHANNEL_B 3 
 
 const char* ssid = "BSR - Uczniowie";
 const char* pswd = "bednarsk@";
@@ -30,13 +34,17 @@ void server_loop(void * params);
 
 
 void setup() {
-  Serial.begin(9600);
+  // Serial.begin(9600);
 
-  ledcSetup(MOTOR_L_CHANNEL, 400, 16);
-  ledcSetup(MOTOR_R_CHANNEL, 400, 16);
+  ledcSetup(MOTOR_L_CHANNEL_F, 400, 16);
+  ledcSetup(MOTOR_L_CHANNEL_B, 400, 16);
+  ledcSetup(MOTOR_R_CHANNEL_F, 400, 16);
+  ledcSetup(MOTOR_R_CHANNEL_B, 400, 16);
 
-  ledcAttachPin(MOTOR_L, MOTOR_L_CHANNEL);
-  ledcAttachPin(MOTOR_R, MOTOR_R_CHANNEL);
+  ledcAttachPin(MOTOR_L_F, MOTOR_L_CHANNEL_F);
+  ledcAttachPin(MOTOR_L_B, MOTOR_L_CHANNEL_B);
+  ledcAttachPin(MOTOR_R_F, MOTOR_R_CHANNEL_F);
+  ledcAttachPin(MOTOR_R_B, MOTOR_R_CHANNEL_B);
 
   wifi_init(AP);
 
@@ -47,7 +55,23 @@ void setup() {
 
 void loop() {
   if(json_document["key"] == KEY) {
-    
+    if(json_document["task"] == "set_motors") {
+      if(json_document["args"]["left"] > 0.0)
+        ledcWrite(MOTOR_L_F, abs((float)json_document["args"]["left"])*65535);
+      else if(json_document["args"]["left"] < 0.0)
+        ledcWrite(MOTOR_L_B, abs((float)json_document["args"]["left"])*65535);
+      else 
+        ledcWrite(MOTOR_L_F, 0);
+        ledcWrite(MOTOR_L_B, 0);
+      
+      if(json_document["args"]["right"] > 0.0)
+        ledcWrite(MOTOR_R_F, abs((float)json_document["args"]["right"])*65535);
+      else if(json_document["args"]["right"] < 0.0)
+        ledcWrite(MOTOR_R_B, abs((float)json_document["args"]["right"])*65535);
+      else 
+        ledcWrite(MOTOR_R_F, 0);
+        ledcWrite(MOTOR_R_B, 0);
+    }
   }
 }
 
@@ -61,11 +85,13 @@ void server_loop(void * params) {
       {
         while(client.available() > 0)
         {
-          char cmd[1024];
+          char cmd[2048];
           client.read((uint8_t *)cmd, 1024);
-          Serial.println(cmd);
+          // Serial.println(cmd);
           deserializeJson(json_document, cmd);
+          vTaskDelay(1);
         }
+        vTaskDelay(1);
       }
       client.stop();
     }
@@ -75,19 +101,19 @@ void server_loop(void * params) {
 
 void wifi_init(bool ap) {
   
-  Serial.print("IP Address is: ");
+  // Serial.print("IP Address is: ");
 
   if(ap) {
     WiFi.softAP(ap_ssid, ap_pswd);
     IPAddress IP = WiFi.softAPIP();
-    Serial.println(IP);
+    // Serial.println(IP);
   } else {
     WiFi.begin(ssid, pswd);
 
     while(WiFi.status() != WL_CONNECTED) {
       delay(1000);
-      Serial.println("Connecting to WiFi...");
+      // Serial.println("Connecting to WiFi...");
     }
-    Serial.println(WiFi.localIP());
+    // Serial.println(WiFi.localIP());
   }  
 }
