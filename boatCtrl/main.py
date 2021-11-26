@@ -22,9 +22,18 @@ class Network:
         while self.running:
             task = input("task: ")
             if task == "sm" or task == "set motors":
+                task = "set_motors"
                 arg = input("Lm;Rm;t: ")
-            if task == "m" or task == "move":
-                arg = input("North;East")
+                arg = {"left": float(arg.split(";")[0]), "right": float(arg.split(";")[1]), "time": float(arg.split(";")[2])}
+
+            if task == "mt" or task == "move to":
+                task = "move_to"
+                arg = input("North;East: ")
+                arg = {"north": float(arg.split(";")[0]), "east": float(arg.split(";")[1])}
+
+            if task == "gd" or task == "get data":
+                task = "get_data"
+                arg = {}
 
             msg = self.create_msg(task, arg)
             self.send_msg(msg)
