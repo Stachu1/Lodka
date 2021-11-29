@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/html">
+<head>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='ico.ico') }}">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+    <meta charset="UTF-8">
+    <br/>
+    <div class="row d-flex justify-content-center">
+        <h1 style="color:white">Łódka</h1>
+    </div>
+    <br/>
+    <meta http-equiv="refresh" content="30">
+</head>
+<body>
+
+    <div class="row d-flex justify-content-center">
+                <button type="button" class="btn btn-light">W</button>
+    </div>
+    <br/>
+    <div class="row d-flex justify-content-center">
+            <button type="button" name="left" class="btn btn-light">A</button>
+            <h100 style="color:dark">___</h100>
+            <button type="button" class="btn btn-light">S</button>
+            <h100 style="color:dark">___</h100>
+            <button type="button" name="right" class="btn btn-light">D</button>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <form method="POST">
+        <div class="row d-flex justify-content-center">
+            <input type="text" name="command" autocomplete="off">
+            <input type="submit" value="Send">
+        </div>
+    </form>
+</body>
+</html>
