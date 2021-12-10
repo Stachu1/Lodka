@@ -6,6 +6,11 @@
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
+
+<!--<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />-->
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
     <meta charset="UTF-8">
     <br/>
@@ -13,20 +18,20 @@
         <h1 style="color:white">Łódka</h1>
     </div>
     <br/>
-    <meta http-equiv="refresh" content="30">
+<!--    <meta http-equiv="refresh" content="30">-->
 </head>
 <body>
 
     <div class="row d-flex justify-content-center">
-                <button type="button" class="btn btn-light">W</button>
+                <button id="button_w" type="button" class="btn btn-light">W</button>
     </div>
     <br/>
     <div class="row d-flex justify-content-center">
-            <button type="button" name="left" class="btn btn-light">A</button>
+            <button id="button_a" type="button" name="left" class="btn btn-light">A</button>
             <h100 style="color:dark">___</h100>
-            <button type="button" class="btn btn-light">S</button>
+            <button id="button_s" type="button" class="btn btn-light">S</button>
             <h100 style="color:dark">___</h100>
-            <button type="button" name="right" class="btn btn-light">D</button>
+            <button id="button_d" type="button" name="right" class="btn btn-light">D</button>
     </div>
     <br/>
     <br/>
@@ -38,5 +43,109 @@
             <input type="submit" value="Send">
         </div>
     </form>
+<script>
+    $('#button_a, #button_w', '#button_s', '#button_d').click(function () {
+   if (this.id == 'button_a') {
+      console.log('button_a clicked');
+   }
+   else if (this.id == 'button_w') {
+      console.log('button_w clicked');
+   }
+   else if (this.id == 'button_s') {
+      console.log('button_s clicked');
+   }
+   else if (this.id == 'button_d') {
+      console.log('button_d clicked');
+   }
+   });
+
+
+    var i = 0;
+
+    var button_a = $("#button_a");
+    var button_w = $("#button_w");
+    var button_s = $("#button_s");
+    var button_d = $("#button_d");
+
+ button_a.on("tap", function() {
+        i++;
+        button_a.removeClass("btn-light");
+        button_a.addClass("btn-warning");
+        console.log("a " +  i);
+    })
+
+
+
+<!--    button_a.mousedown(function() {-->
+<!--        i++;-->
+<!--        button_a.removeClass("btn-light");-->
+<!--        button_a.addClass("btn-warning");-->
+<!--    })-->
+<!--    button_a.mouseup(function() {-->
+
+<!--        button_a.removeClass("btn-warning");-->
+<!--        button_a.addClass("btn-light");-->
+
+<!--        console.log("a " +  i);-->
+<!--    })-->
+
+<!--    button_w.mousedown(function() {-->
+<!--        i++;-->
+<!--        button_w.removeClass("btn-light");-->
+<!--        button_w.addClass("btn-warning");-->
+
+<!--        console.log("w " +  i);-->
+<!--    })-->
+<!--    button_w.mouseup(function() {-->
+
+<!--        button_w.removeClass("btn-warning");-->
+<!--        button_w.addClass("btn-light");-->
+
+<!--        console.log("w " +  i);-->
+<!--    })-->
+
+<!--    button_s.mousedown(function() {-->
+<!--        i++;-->
+<!--        button_s.removeClass("btn-light");-->
+<!--        button_s.addClass("btn-warning");-->
+
+<!--        console.log("s " +  i);-->
+<!--    })-->
+<!--    button_s.mouseup(function() {-->
+
+<!--        button_s.removeClass("btn-warning");-->
+<!--        button_s.addClass("btn-light");-->
+
+<!--        console.log("s " +  i);-->
+<!--    })-->
+
+<!--    button_d.mousedown(function() {-->
+<!--        i++;-->
+<!--        button_d.removeClass("btn-light");-->
+<!--        button_d.addClass("btn-warning");-->
+
+<!--        console.log("d " +  i);-->
+<!--    })-->
+<!--    button_d.mouseup(function() {-->
+
+<!--        button_d.removeClass("btn-warning");-->
+<!--        button_d.addClass("btn-light");-->
+
+<!--        console.log("d " +  i);-->
+<!--    })-->
+
+i =0;
+    setInterval(function() {
+
+       state = {
+         left: false,
+         right: false
+       }
+<!--       console.log("Sending state: "+i+JSON.stringify(state))-->
+       i++;
+    }, 100)
+
+
+</script>
 </body>
 </html>
